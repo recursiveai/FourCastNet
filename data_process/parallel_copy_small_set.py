@@ -106,6 +106,33 @@ def writetofile(src, dest, channel_idx, varslist, src_idx=0, frmt='nc'):
             mins = (ttot - 3600*hrs)//60
             secs = (ttot - 3600*hrs - 60*mins)
             channel_idx += 1 
+            
+
+def writetofile_simplest(src, dest, channel_idx, variable_name):
+    """Write era5 data from nc file to hdf5 with channels in the right order for FourCastNet.
+    
+    Args: 
+        src - str: path to the source nc file
+        dest - str: path to the destination hdf5 file
+        channel_idx - int: index of the channel in the target hdf5 file
+        variable_name - str: variable to copy from the source file
+    """
+    batch = 4
+    nfeatures = 20
+    latlon = (721, 1440)
+    
+    with h5py.File(dest, 'a') as fdest:
+        if "fields" not in fdest:
+            shape = (batch, nfeatures, *latlon)
+            dtype = "float32"
+            fdest.create_dataset("fields", shape, dtype=dtype)
+    
+    fsrc = DS(src, 'r', format="NETCDF4").variables[variable_name]
+    
+    with h5py.File(dest, 'a') as fdest:
+        fdest['fields'][:, channel_idx, :, :] = fsrc[:]
+            
+
 filestr = 'oct_2021_19_31'
 dest = '/global/cscratch1/sd/jpathak/21var/oct_2021_19_21.h5'
 

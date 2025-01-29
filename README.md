@@ -1,3 +1,25 @@
+# Recursive Forked Version
+
+0. Clone the repository, 
+
+```
+git clone https://github.com/recursiveai/FourCastNet
+cd FourCastNet
+```
+
+1. Build and run the container
+
+NOTE: Assumes nvidia runtime is available for docker.
+
+```docker build -f docker/Dockerfile -t fourcastnet .```
+```docker run --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --runtime nvidia -v ${PWD}:/workspace -it fourcastnet:latest```
+
+2. Copy data and checkpoints from the bucket. 
+
+NOTE: Checkpoints are 1Gb each and take time to download. 
+
+```python download_data.sh```
+
 # FourCastNet
 
 ![nvidia](assets/nvidia.png) ![nersc](assets/nersc.png)

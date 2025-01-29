@@ -113,6 +113,7 @@ class GetDataset(Dataset):
     self.files_paths = glob.glob(self.location + "/*.h5")
     self.files_paths.sort()
     self.n_years = len(self.files_paths)
+    logging.info(f"Inference files paths: {self.files_paths}")
     with h5py.File(self.files_paths[0], 'r') as _f:
         logging.info("Getting file stats from {}".format(self.files_paths[0]))
         self.n_samples_per_year = _f['fields'].shape[0]
