@@ -11,8 +11,12 @@ cd FourCastNet
 
 NOTE: Assumes nvidia runtime is available for docker.
 
-```docker build -f docker/Dockerfile -t fourcastnet .```
-```docker run --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --runtime nvidia -v ${PWD}:/workspace -it fourcastnet:latest```
+```
+docker build -f docker/Dockerfile -t fourcastnet .
+```
+```
+docker run --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --runtime nvidia -v ${PWD}:/workspace -it fourcastnet:latest
+```
 
 2. Copy data and checkpoints from the bucket. 
 
